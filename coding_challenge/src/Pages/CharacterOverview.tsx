@@ -7,7 +7,6 @@ import { dataCollector } from "../DataCollector";
 import { Character } from "../Models/Character";
 
 export const CharacterOverview: React.FC = (props) => {
-  console.log(props);
   const [data, setData] = useState<Character[]>([]);
   const [page, setPage] = useState(1);
   const fetchData = async () => {
@@ -24,7 +23,6 @@ export const CharacterOverview: React.FC = (props) => {
     setPage(page - 1);
   };
 
-
   return (
     <DashboardLayout>
       <div>
@@ -34,11 +32,9 @@ export const CharacterOverview: React.FC = (props) => {
           data.map((character) => (
             <div key={character.id}>
               <p>Name : {character.name}</p>
-                <Link to={{pathname:`character/${character.id}`}}>
-                  <Button onClick={()=>{}}>
-                    Show Details
-                  </Button>
-                </Link>
+              <Link to={{ pathname: `character/${character.id}` }}>
+                <Button onClick={() => {}}>Show Details</Button>
+              </Link>
             </div>
           ))
         )}
