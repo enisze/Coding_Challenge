@@ -1,8 +1,10 @@
-import Icon from "awesome-react-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Navigation } from "react-minimal-side-navigation/lib";
 import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
 import { useHistory, useLocation } from "react-router-dom";
+import { faFilm } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const NavSidebar = () => {
   const history = useHistory();
@@ -23,12 +25,12 @@ export const NavSidebar = () => {
             {
               title: "Episodes",
               itemId: "/episodes",
-              elemBefore: () => <Icon name="coffee" />,
+              elemBefore: () => <FontAwesomeIcon icon={faFilm} />,
             },
             {
               title: "Characters",
               itemId: "/characters",
-              elemBefore: () => <Icon name="user" />,
+              elemBefore: () => <FontAwesomeIcon icon={faUser} />,
             },
           ]}
         />

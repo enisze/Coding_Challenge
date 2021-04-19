@@ -29,6 +29,16 @@ export class DataCollector {
     return response.results;
   };
 
+  getCharactersByIds = async (ids: number[]): Promise<Character[]> => {
+    if (!ids) return;
+    const response = await fetch(this.endpoint + "/character/" + ids).then(
+      (data) => {
+        return data.json();
+      }
+    );
+    return response.length > 1 ? response : [response];
+  };
+
   getEpisodes = async (page: number): Promise<Episode[]> => {
     const response = await fetch(this.endpoint + "/episode/?page=" + page).then(
       (data) => {
@@ -40,8 +50,19 @@ export class DataCollector {
     }
     return response.results;
   };
+  
+  getEpisodesByIds = async (ids: number[]): Promise<Episode[]> => {
+    if (!ids) return;
+    const response = await fetch(this.endpoint + "/episode/" + ids).then(
+      (data) => {
+        return data.json();
+      }
+    );
+    return response.length > 1 ? response : [response];
+  };
 
-  getCharacterById = async (id: number) => {
+  getCharacterById = async (id: number): Promise<Character> => {
+    if (!id) return;
     const response = await fetch(this.endpoint + "/character/" + id).then(
       (data) => {
         return data.json();
@@ -50,7 +71,8 @@ export class DataCollector {
     return response;
   };
 
-  getEpisodeById = async (id: number) => {
+  getEpisodeById = async (id: number): Promise<Episode> => {
+    if (!id) return;
     const response = await fetch(this.endpoint + "/episode/" + id).then(
       (data) => {
         return data.json();

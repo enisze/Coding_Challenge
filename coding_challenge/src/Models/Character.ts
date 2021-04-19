@@ -8,7 +8,7 @@ export interface Character {
   status: Status;
   type: string;
   image: string;
-  episodes: string[];
+  episode: string[];
   url: string;
   created: string;
 }
