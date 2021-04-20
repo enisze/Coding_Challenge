@@ -1,14 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, RouteComponentProps, useParams } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import { BackButton, Button } from "../Components/StyledComponents";
+import { DashboardLayout } from "../Components/DashboardLayout";
+import {
+  BackButton,
+  ContainerDiv,
+
+  HeaderText,
+  ItemText
+} from "../Components/StyledComponents";
 import { dataCollector } from "../DataCollector";
-import { toggleFavourites } from "../Helpers/toggleFavourites";
 import { Character } from "../Models/Character";
-import { faHeart, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { Episode } from "../Models/Episode";
+import { CharacterInfo } from "./CharacterInfo";
 import { EpisodeList } from "./EpisodeList";
 
 interface Characterparams {
@@ -17,7 +21,6 @@ interface Characterparams {
 export const CharacterDetails: React.FC<RouteComponentProps> = (props) => {
   const { id } = useParams<Characterparams>();
   const appContext = useContext(AppContext);
-  const favourites = appContext.favourites;
 
   const [character, setCharacter] = useState<Character | null>(null);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -41,34 +44,39 @@ export const CharacterDetails: React.FC<RouteComponentProps> = (props) => {
     fetchData();
   }, []);
 
-  const calculateFavourites = async (id: number) => {
-    appContext.setFavourites(await toggleFavourites(id));
-  };
   return (
-    <div>
-      {character ? (
-        <div>
-          <BackButton goBack={props.history.goBack}></BackButton>
-          <img src={character.image} />
-          <span>{character.name}</span>
-          <Button
-            onClick={() => {
-              calculateFavourites(character.id);
-            }}
-          >
-            <FontAwesomeIcon
-              icon={favourites.includes(character.id) ? faHeart : regularHeart}
-            />
-          </Button>
-        </div>
-      ) : null}
+    <DashboardLayout>
       <div>
-        {episodes ? (
-          <EpisodeList episodes={episodes}></EpisodeList>
-        ) : (
-          <div>No Episodes</div>
-        )}
+        {character ? (
+          <div>
+            <BackButton goBack={props.history.goBack}></BackButton>
+          <HeaderText>Character Details:</HeaderText>
+            <ContainerDiv>
+              <img
+                style={{ paddingBottom: "1rem", paddingRight: "1rem" }}
+                src={character.image}
+              />
+              <div>
+                <CharacterInfo character={character} showDetails={false} />
+                <ItemText>Species: {character.species}</ItemText>
+                <ItemText>Gender: {character.gender}</ItemText>
+                <ItemText>Status: {character.status}</ItemText>
+                <ItemText>
+                  Type: {character.type ? character.type : "None"}
+                </ItemText>
+              </div>
+            </ContainerDiv>
+          </div>
+        ) : null}
+        <div>
+          <HeaderText>Episode List:</HeaderText>
+          {episodes ? (
+            <EpisodeList episodes={episodes}></EpisodeList>
+          ) : (
+            <div>No Episodes</div>
+          )}
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
