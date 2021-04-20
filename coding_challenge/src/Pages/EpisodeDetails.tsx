@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps, useParams } from "react-router-dom";
-import { BackButton } from "../Components/StyledComponents";
+import { DashboardLayout } from "../Components/DashboardLayout";
+import {
+  BackButton,
+  HeaderText,
+  ItemText,
+} from "../Components/StyledComponents";
 import { dataCollector } from "../DataCollector";
 import { Character } from "../Models/Character";
 import { Episode } from "../Models/Episode";
 import { CharacterList } from "./CharacterList";
+import { EpisodeInfo } from "./EpisodeInfo";
 
 interface EpisodeParams {
   id: string;
@@ -34,16 +40,22 @@ export const EpisodeDetails: React.FC<RouteComponentProps> = (props) => {
   }, []);
 
   return (
-    <div>
-      <BackButton goBack={props.history.goBack} />
-      {episode ? (
-        <div>
-          Episode:<span>{episode.name}</span>
-          {characters.length > 0 ? (
-            <CharacterList characters={characters}></CharacterList>
-          ) : null}
-        </div>
-      ) : null}
-    </div>
+    <DashboardLayout>
+      <div>
+        <BackButton goBack={props.history.goBack} />
+        <HeaderText>Episode Details:</HeaderText>
+        {episode ? (
+          <div>
+            <EpisodeInfo episode={episode} showDetails={false} />
+            <ItemText>Episode: {episode.episode}</ItemText>
+            <ItemText>Air date: {episode.air_date}</ItemText>
+            <HeaderText>Character List:</HeaderText>
+            {characters.length > 0 ? (
+              <CharacterList characters={characters}></CharacterList>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </DashboardLayout>
   );
 };

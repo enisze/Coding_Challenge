@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { DashboardLayout } from "../Components/DashboardLayout";
-import { Button } from "../Components/StyledComponents";
+import { PageNavigation } from "../Components/PageNavigation";
 import { dataCollector } from "../DataCollector";
 import { Episode } from "../Models/Episode";
+import { EpisodeInfo } from "./EpisodeInfo";
 
 export const EpisodeOverview: React.FC = (props) => {
   const [data, setData] = useState<Episode[]>([]);
@@ -15,13 +15,6 @@ export const EpisodeOverview: React.FC = (props) => {
     fetchData();
   }, [page]);
 
-  const next = () => {
-    setPage(page + 1);
-  };
-  const previous = () => {
-    setPage(page - 1);
-  };
-
   return (
     <DashboardLayout>
       <div>
@@ -30,20 +23,15 @@ export const EpisodeOverview: React.FC = (props) => {
         ) : (
           data.map((episode) => (
             <div key={episode.id}>
-              <p>Name : {episode.name}</p>
-              <Link to={{ pathname: `episode/${episode.id}` }}>
-                <Button>More</Button>
-              </Link>
+              <EpisodeInfo episode={episode} showDetails={true}></EpisodeInfo>
             </div>
           ))
         )}
-        {page > 1 ? (
-          <button onClick={() => previous()}>Previous </button>
-        ) : null}{" "}
-        <p>{page}</p>
-        {page < dataCollector.MAX_PAGE_EPISODES ? (
-          <button onClick={() => next()}>Next</button>
-        ) : null}{" "}
+        <PageNavigation
+          setPage={setPage}
+          page={page}
+          max_pages={dataCollector.MAX_PAGE_EPISODES}
+        />
       </div>
     </DashboardLayout>
   );

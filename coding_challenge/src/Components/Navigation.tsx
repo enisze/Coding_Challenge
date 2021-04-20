@@ -9,7 +9,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 export const NavSidebar = () => {
   const history = useHistory();
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
     <React.Fragment>

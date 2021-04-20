@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
 import { DashboardLayout } from "../Components/DashboardLayout";
-import { Button } from "../Components/StyledComponents";
+import { PageNavigation } from "../Components/PageNavigation";
 import { dataCollector } from "../DataCollector";
 import { Character } from "../Models/Character";
+import { CharacterInfo } from "./CharacterInfo";
 
 export const CharacterOverview: React.FC = (props) => {
   const [data, setData] = useState<Character[]>([]);
@@ -16,13 +16,6 @@ export const CharacterOverview: React.FC = (props) => {
     fetchData();
   }, [page]);
 
-  const next = () => {
-    setPage(page + 1);
-  };
-  const previous = () => {
-    setPage(page - 1);
-  };
-
   return (
     <DashboardLayout>
       <div>
@@ -31,20 +24,15 @@ export const CharacterOverview: React.FC = (props) => {
         ) : (
           data.map((character) => (
             <div key={character.id}>
-              <p>Name : {character.name}</p>
-              <Link to={{ pathname: `character/${character.id}` }}>
-                <Button onClick={() => {}}>Show Details</Button>
-              </Link>
+              <CharacterInfo character={character} showDetails={true} />
             </div>
           ))
         )}
-        {page > 1 ? (
-          <button onClick={() => previous()}>Previous </button>
-        ) : null}{" "}
-        <p>{page}</p>
-        {page < dataCollector.MAX_PAGE_CHARACTERS ? (
-          <button onClick={() => next()}>Next</button>
-        ) : null}{" "}
+        <PageNavigation
+          setPage={setPage}
+          page={page}
+          max_pages={dataCollector.MAX_PAGE_CHARACTERS}
+        />
       </div>
     </DashboardLayout>
   );
