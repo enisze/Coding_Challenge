@@ -4,7 +4,11 @@ import { DashboardLayout } from "../Components/DashboardLayout";
 export const MainWindow: React.FC = (props) => {
   return (
     <DashboardLayout>
-      <div>test</div>
+      <div>Welcome, 
+        on this page you can browse the Characters and Episodes of Rick and Morty.
+
+        Enjoy!
+      </div>
     </DashboardLayout>
   );
 };
