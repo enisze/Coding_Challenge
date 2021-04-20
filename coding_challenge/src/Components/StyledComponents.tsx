@@ -88,7 +88,7 @@ export const ContainerDiv = styled.div`
   display: flex;
 `;
 export const SidebarDiv = styled.div`
-  width: 15%;
+  width: 10rem;
 `;
 export const ItemsDiv = styled.div`
   width: 85%;

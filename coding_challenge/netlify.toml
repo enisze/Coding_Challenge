@@ -1,0 +1,19 @@
+[[redirects]]
+  from = "/characters"
+  to = "/characters"
+  status = 301
+
+[[redirects]]
+  from = "/episodes"
+  to = "/episodes"
+  status = 301
+
+[[redirects]]
+  from = "/character/:id"
+  to = "/character/:id"
+  status = 301
+
+[[redirects]]
+  from = "/episode/:id"
+  to = "/episode/:id"
+  status = 301
